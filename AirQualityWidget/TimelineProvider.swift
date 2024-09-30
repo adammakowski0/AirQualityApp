@@ -11,11 +11,19 @@ import WidgetKit
 struct Provider: AppIntentTimelineProvider {
     
     func placeholder(in context: Context) -> AirQualityEntry {
-        AirQualityEntry(date: Date(), configuration: SelectStationIntent(), airQuality: nil)
+        
+        let airQuality = AirQualityIndex(id: 123, stCalcDate: "2024-01-01 12:00:00", stIndexLevel: IndexLevel(id: 1, indexLevelName: "Dobry"), stSourceDataDate: "2024-01-01 12:00:00")
+        let config = SelectStationIntent(station: StationDetail(id: 1, stationName: "Nazwa stacji pomiarowej", gegrLat: "50.0", gegrLon: "15.00", city: City(id: 1, name: "Miasto", commune: Commune(communeName: "", districtName: "", provinceName: ""))))
+        
+        return AirQualityEntry(date: Date(), configuration: config, airQuality: airQuality)
     }
     
     func snapshot(for configuration: SelectStationIntent, in context: Context) async -> AirQualityEntry {
-        await createTimeLineEntry(for: configuration, in: context)
+        
+        let airQuality = AirQualityIndex(id: 123, stCalcDate: "2024-01-01 12:00:00", stIndexLevel: IndexLevel(id: 1, indexLevelName: "Dobry"), stSourceDataDate: "2024-01-01 12:00:00")
+        let config = SelectStationIntent(station: StationDetail(id: 1, stationName: "Nazwa stacji pomiarowej", gegrLat: "50.0", gegrLon: "15.00", city: City(id: 1, name: "Miasto", commune: Commune(communeName: "", districtName: "", provinceName: ""))))
+        
+        return AirQualityEntry(date: Date(), configuration: config, airQuality: airQuality)
     }
     
     func timeline(for configuration: SelectStationIntent, in context: Context) async -> Timeline<AirQualityEntry> {

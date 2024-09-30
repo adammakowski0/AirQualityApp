@@ -43,7 +43,6 @@ struct StationQuery: EntityQuery {
     func entities(for identifiers: [StationDetail.ID]) async throws -> [StationDetail] {
         let data = await getStations()
         if let data{
-//            print(identifiers)
             return data.filter { identifiers.contains($0.id) }
         }
         return []
