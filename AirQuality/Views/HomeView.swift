@@ -47,6 +47,8 @@ struct HomeView: View {
                     showNewUserView = true
                 }
             }
+            NotificationManager.instance.requestAuthorization()
+            NotificationManager.instance.scheduleNotification()
         }
     }
 }
