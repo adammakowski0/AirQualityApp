@@ -125,14 +125,12 @@ extension HomeView {
             } label: {
                 Text("Kontynuuj")
                     .font(.headline)
-                    
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(.thinMaterial)
                     .cornerRadius(15)
                     .padding(.horizontal)
                     .shadow(radius: 10)
-                    
             }
             
         }

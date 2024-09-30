@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct AirQualityIndex : Identifiable, Codable {
     let id: Int
     let stCalcDate: String

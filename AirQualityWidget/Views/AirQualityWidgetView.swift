@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
-struct AirQualityWidgetSmallView : View {
+struct AirQualityWidgetView : View {
     
     @Environment(\.widgetFamily) var widgetFamily
     
@@ -25,7 +25,7 @@ struct AirQualityWidgetSmallView : View {
                 HStack(spacing: 5) {
                     Image(systemName: "location.fill")
                     
-                    Text("\(entry.configuration.character?.stationName ?? "")")
+                    Text("\(entry.configuration.station?.stationName ?? "")")
                         .fontDesign(.rounded)
                 }
                 .font(.system(size: 10))
@@ -33,29 +33,32 @@ struct AirQualityWidgetSmallView : View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 .padding(.horizontal, 10)
+                
                 Spacer()
+                
                 Text("Wskaźnik jakości powietrza:")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
                     .fontDesign(.rounded)
                 let airIndex = entry.airQuality?.stIndexLevel.indexLevelName ?? "Brak danych"
-                    Text(airIndex)
-                        .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex))
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .fontDesign(.rounded)
-                        .multilineTextAlignment(.center)
+                Text(airIndex)
+                    .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex))
+                    .font(.title)
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                    .multilineTextAlignment(.center)
                 Spacer()
             }
             .frame(maxWidth: .infinity)
             .background(.gray.opacity(0.2).gradient)
+            
         case .systemMedium:
             VStack{
                 HStack {
                     Image(systemName: "location.fill")
                     
-                    Text("\(entry.configuration.character?.stationName ?? "")")
+                    Text("\(entry.configuration.station?.stationName ?? "")")
                         .fontDesign(.rounded)
                 }
                 .font(.system(size: 10))
@@ -63,6 +66,7 @@ struct AirQualityWidgetSmallView : View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 10)
                 .padding(.horizontal, 10)
+                
                 HStack{
                     VStack {
                         
@@ -79,7 +83,9 @@ struct AirQualityWidgetSmallView : View {
                     Divider()
                     Spacer()
                 }
-            }.background(.gray.opacity(0.2).gradient)
+            }
+            .background(.gray.opacity(0.2).gradient)
+            
         default:
             Text("Brak danych")
                 .foregroundStyle(.gray)
@@ -87,14 +93,11 @@ struct AirQualityWidgetSmallView : View {
                 .fontWeight(.heavy)
                 .fontDesign(.rounded)
         }
-        
-        
-
     }
 }
 
 #Preview(as: .systemSmall) {
-    AirQualityWidgetSmall()
+    AirQualityWidget()
 } timeline: {
-    SimpleEntry(date: .now, configuration: SelectCharacterIntent(), airQuality: nil)
+    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil)
 }

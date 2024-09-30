@@ -24,7 +24,7 @@ struct StationDetailView: View {
         headerView
         ScrollView{
             sensorsDataView
-
+            
             airQualityView
             
             mapView
@@ -57,7 +57,6 @@ extension StationDetailView {
                     .shadow(radius: 10)
                     .padding([.bottom, .trailing])
             }
-
         }
         .padding(.horizontal)
         .padding(.top)

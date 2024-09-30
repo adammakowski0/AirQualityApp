@@ -11,6 +11,6 @@ import SwiftUI
 @main
 struct AirQualityWidgetBundle: WidgetBundle {
     var body: some Widget {
-        AirQualityWidgetSmall()
+        AirQualityWidget()
     }
 }

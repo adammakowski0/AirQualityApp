@@ -8,28 +8,21 @@
 import WidgetKit
 import SwiftUI
 
-struct AirQualityWidgetSmall: Widget {
-    let kind: String = "AirQualityWidgetSmall"
+struct AirQualityWidget: Widget {
+    let kind: String = "AirQualityWidget"
     
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: SelectCharacterIntent.self, provider: Provider()) { entry in
-            AirQualityWidgetSmallView(entry: entry)
+        AppIntentConfiguration(kind: kind, intent: SelectStationIntent.self, provider: Provider()) { entry in
+            AirQualityWidgetView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
-            
         }
         .contentMarginsDisabled()
         .supportedFamilies([.systemSmall, .systemMedium])
-        
     }
 }
 
 #Preview(as: .systemSmall) {
-    AirQualityWidgetSmall()
+    AirQualityWidget()
 } timeline: {
-    SimpleEntry(date: .now, configuration: SelectCharacterIntent(), airQuality: nil)
+    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil)
 }
-//#Preview(as: .systemMedium) {
-//    AirQualityWidgetMedium()
-//} timeline: {
-//    SimpleEntry(date: .now, configuration: ConfigurationAppIntent(), airQuality: nil)
-//}

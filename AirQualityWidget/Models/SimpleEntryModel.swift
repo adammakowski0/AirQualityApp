@@ -8,8 +8,8 @@
 import Foundation
 import WidgetKit
 
-struct SimpleEntry: TimelineEntry {
+struct AirQualityEntry: TimelineEntry {
     let date: Date
-    let configuration: SelectCharacterIntent
+    let configuration: SelectStationIntent
     let airQuality: AirQualityIndex?
 }

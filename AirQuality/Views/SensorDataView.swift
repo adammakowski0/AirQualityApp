@@ -43,7 +43,6 @@ struct SensorDataView: View {
             else{
                 Text("Brak aktualnych danych")
             }
-            
         }
         .padding(.horizontal)
         .padding(.vertical, 5)

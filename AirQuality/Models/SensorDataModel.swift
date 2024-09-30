@@ -17,5 +17,4 @@ struct SensorDataValues : Codable, Identifiable {
     let date: String
     var value: Double? = nil
     var id: UUID? = UUID()
-//    var animateChart: Bool? = false
 }

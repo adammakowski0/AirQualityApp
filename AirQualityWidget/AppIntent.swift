@@ -9,51 +9,47 @@ import WidgetKit
 import AppIntents
 import SwiftUI
 
-struct SelectCharacterIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource = "Select Character"
-    static var description = IntentDescription("Selects the character to display information for.")
+struct SelectStationIntent: WidgetConfigurationIntent {
+    static var title: LocalizedStringResource = "Wybierz stację pomiarową"
+    static var description = IntentDescription("Wyświetla dane o jakości powietrza z wybranej stacji pomiarowej.")
 
+    @Parameter(title: "Stacja pomiarowa")
+    var station: StationDetail?
 
-    @Parameter(title: "Character")
-    var character: CharacterDetail?
-
-
-    init(character: CharacterDetail) {
-        self.character = character
+    init(station: StationDetail) {
+        self.station = station
     }
-
-
+    
     init() {
     }
-
 }
 
-struct CharacterDetail: AppEntity, Codable {
+struct StationDetail: AppEntity, Codable {
     let id: Int
     let stationName: String
     let gegrLat: String
     let gegrLon: String
     let city: City
     
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Character"
-    static var defaultQuery = CharacterQuery()
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Stacja pomiarowa"
+    static var defaultQuery = StationQuery()
             
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: "\(stationName) \(id)")
+        DisplayRepresentation(title: "\(stationName)")
     }
 }
 
-struct CharacterQuery: EntityQuery {
-    func entities(for identifiers: [CharacterDetail.ID]) async throws -> [CharacterDetail] {
+struct StationQuery: EntityQuery {
+    func entities(for identifiers: [StationDetail.ID]) async throws -> [StationDetail] {
         let data = await getStations()
         if let data{
+//            print(identifiers)
             return data.filter { identifiers.contains($0.id) }
         }
         return []
-
     }
     
-    func suggestedEntities() async throws -> [CharacterDetail] {
+    func suggestedEntities() async throws -> [StationDetail] {
         let data = await getStations()
         if let data{
             return data
@@ -61,18 +57,18 @@ struct CharacterQuery: EntityQuery {
         return []
     }
     
-    func defaultResult() async -> CharacterDetail? {
+    func defaultResult() async -> StationDetail? {
         try? await suggestedEntities().first
     }
     
-    func getStations() async -> [CharacterDetail]? {
+    func getStations() async -> [StationDetail]? {
         guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/rest/station/findAll") else {return nil}
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             guard
                 let response = response as? HTTPURLResponse,
                 response.statusCode >= 200 && response.statusCode < 300 else {return nil}
-            return try JSONDecoder().decode([CharacterDetail].self, from: data)
+            return try JSONDecoder().decode([StationDetail].self, from: data)
         }
         catch {
             print(error.localizedDescription)

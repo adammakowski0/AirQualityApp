@@ -40,7 +40,6 @@ struct SensorDataChart: View {
                             y: .value("Value", chartValue))
                         .interpolationMethod(.catmullRom)
                         
-                        
                         AreaMark(
                             x: .value("Date", value.date),
                             y: .value("Value", chartValue))
