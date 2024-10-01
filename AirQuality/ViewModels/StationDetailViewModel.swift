@@ -72,7 +72,9 @@ class StationDetailViewModel: ObservableObject {
         case "Dobry":
             return Color(red: 0.2, green: 0.8, blue: 0.0)
         case "Umiarkowany":
-            return Color(red: 0.5, green: 0.5, blue: 0.0)
+            return Color(red: 0.4, green: 0.6, blue: 0.0)
+        case "Dostateczny":
+            return Color(red: 0.7, green: 0.4, blue: 0.0)
         case "Zły":
             return Color(red: 0.8, green: 0.2, blue: 0.0)
         case "Bardzo zły":
