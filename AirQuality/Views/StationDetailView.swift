@@ -77,7 +77,7 @@ extension StationDetailView {
                 .padding(.leading)
                 .padding(.bottom,5)
             ForEach(vm.sensors) { sensor in
-                SensorDataView(sensor: sensor)
+                SensorDataRowView(sensor: sensor)
             }
             Divider()
         }

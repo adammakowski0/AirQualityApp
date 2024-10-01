@@ -18,11 +18,13 @@ struct AirQualityWidget: Widget {
         }
         .contentMarginsDisabled()
         .supportedFamilies([.systemSmall, .systemMedium])
+        .configurationDisplayName("Wskaźnik jakości powietrza")
+        .description("Wyświetla wskaźnik jakości powietrza z wybranej stacji pomiarowej.")
     }
 }
 
 #Preview(as: .systemSmall) {
     AirQualityWidget()
 } timeline: {
-    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil)
+    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil, sensorData: nil)
 }

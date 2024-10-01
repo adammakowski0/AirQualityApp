@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct SensorDataView: View {
+struct SensorDataRowView: View {
     
     @StateObject var vm: SensorDataViewModel
     
@@ -59,5 +59,5 @@ struct SensorDataView: View {
 }
 
 #Preview {
-    SensorDataView(sensor: Sensor(id: 644, stationId: 114, param: Param(paramName: "dwutlenek azotu", paramFormula: "NO2", paramCode: "NO2", idParam: 6)))
+    SensorDataRowView(sensor: Sensor(id: 644, stationId: 114, param: Param(paramName: "dwutlenek azotu", paramFormula: "NO2", paramCode: "NO2", idParam: 6)))
 }

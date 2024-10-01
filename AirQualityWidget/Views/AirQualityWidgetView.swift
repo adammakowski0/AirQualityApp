@@ -67,21 +67,29 @@ struct AirQualityWidgetView : View {
                 .padding(.top, 10)
                 .padding(.horizontal, 10)
                 
-                HStack{
-                    VStack {
-                        
-                        Text("Wskaźnik jakości powietrza:")
-                            .font(.caption)
-                            .fontDesign(.rounded)
-                        let airIndex = entry.airQuality?.stIndexLevel.indexLevelName ?? "Brak danych"
-                        Text(airIndex)
-                            .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex))
-                            .font(.title2)
-                            .fontWeight(.heavy)
-                            .fontDesign(.rounded)
+                GeometryReader { proxy in
+                    HStack{
+                        VStack {
+                            
+                            Text("Wskaźnik jakości powietrza:")
+                                .font(.caption)
+                                .fontDesign(.rounded)
+                            let airIndex = entry.airQuality?.stIndexLevel.indexLevelName ?? "Brak danych"
+                            Text(airIndex)
+                                .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex))
+                                .font(.title2)
+                                .fontWeight(.heavy)
+                                .fontDesign(.rounded)
+                        }
+                        .frame(width: proxy.size.width/2)
+                        VStack{
+                            if let data = entry.sensorData{
+                                if let value = data.values.first{
+                                    Text("\(value.value ?? 0.0)")
+                                }
+                            }  
+                        }
                     }
-                    Divider()
-                    Spacer()
                 }
             }
             .background(.gray.opacity(0.2).gradient)
@@ -96,8 +104,8 @@ struct AirQualityWidgetView : View {
     }
 }
 
-#Preview(as: .systemSmall) {
+#Preview(as: .systemMedium) {
     AirQualityWidget()
 } timeline: {
-    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil)
+    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil, sensorData: nil)
 }

@@ -1,28 +1,13 @@
 //
-//  AppIntent.swift
-//  AirQualityWidget
+//  StationDetailEntity.swift
+//  AirQualityWidgetExtension
 //
-//  Created by Adam Makowski on 24/09/2024.
+//  Created by Adam Makowski on 01/10/2024.
 //
 
+import Foundation
 import WidgetKit
 import AppIntents
-import SwiftUI
-
-struct SelectStationIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource = "Wybierz stację pomiarową"
-    static var description = IntentDescription("Wyświetla dane o jakości powietrza z wybranej stacji pomiarowej.")
-
-    @Parameter(title: "Stacja pomiarowa")
-    var station: StationDetail?
-
-    init(station: StationDetail) {
-        self.station = station
-    }
-    
-    init() {
-    }
-}
 
 struct StationDetail: AppEntity, Codable {
     let id: Int
@@ -51,7 +36,7 @@ struct StationQuery: EntityQuery {
     func suggestedEntities() async throws -> [StationDetail] {
         let data = await getStations()
         if let data{
-            return data
+            return data.sorted { $0.stationName.lowercased() < $1.stationName.lowercased()}
         }
         return []
     }
@@ -75,4 +60,3 @@ struct StationQuery: EntityQuery {
         }
     }
 }
-

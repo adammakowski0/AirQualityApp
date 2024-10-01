@@ -49,7 +49,7 @@ struct SensorDataChart: View {
                 }
             }
         }
-        .aspectRatio(1, contentMode: .fit)
+        .aspectRatio(1.5, contentMode: .fit)
         .chartXAxis {
             AxisMarks() { value in
                 if value.index == value.count/6 ||

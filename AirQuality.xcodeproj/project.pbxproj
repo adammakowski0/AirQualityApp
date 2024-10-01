@@ -61,6 +61,8 @@
 				Models/StationModel.swift,
 				NetworkManager.swift,
 				ViewModels/HomeViewModel.swift,
+				ViewModels/SensorDataViewModel.swift,
+				Views/SensorDataChart.swift,
 			);
 			target = 2CC28F0E2CA3F665007C4090 /* AirQualityWidgetExtension */;
 		};
@@ -456,7 +458,6 @@
 				INFOPLIST_FILE = AirQualityWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AirQualityWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -484,7 +485,6 @@
 				INFOPLIST_FILE = AirQualityWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AirQualityWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
