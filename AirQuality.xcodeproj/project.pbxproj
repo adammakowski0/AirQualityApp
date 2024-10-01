@@ -61,8 +61,6 @@
 				Models/StationModel.swift,
 				NetworkManager.swift,
 				ViewModels/HomeViewModel.swift,
-				ViewModels/SensorDataViewModel.swift,
-				Views/SensorDataChart.swift,
 			);
 			target = 2CC28F0E2CA3F665007C4090 /* AirQualityWidgetExtension */;
 		};
