@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import WidgetKit
+import Charts
 
 struct AirQualityWidgetView : View {
     
@@ -31,8 +32,9 @@ struct AirQualityWidgetView : View {
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 10)
-                .padding(.horizontal, 10)
+                .padding([.top, .horizontal], 10)
+                .padding(.bottom, 5)
+                .background(.gray.opacity(0.1).gradient)
                 
                 Spacer()
                 
@@ -54,6 +56,8 @@ struct AirQualityWidgetView : View {
             .background(.gray.opacity(0.2).gradient)
             
         case .systemMedium:
+            let airIndex = entry.airQuality?.stIndexLevel.indexLevelName ?? "Brak danych"
+            let sensorData = entry.configuration.sensor
             VStack{
                 HStack {
                     Image(systemName: "location.fill")
@@ -64,30 +68,73 @@ struct AirQualityWidgetView : View {
                 .font(.system(size: 10))
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 10)
-                .padding(.horizontal, 10)
+                .padding([.top, .horizontal], 10)
+                .padding(.bottom, 5)
+                .background(.gray.opacity(0.1).gradient)
                 
                 GeometryReader { proxy in
                     HStack{
-                        VStack {
-                            
+                        VStack(spacing: 10) {
                             Text("Wskaźnik jakości powietrza:")
                                 .font(.caption)
+                                .fontWeight(.semibold)
+                                .multilineTextAlignment(.center)
                                 .fontDesign(.rounded)
-                            let airIndex = entry.airQuality?.stIndexLevel.indexLevelName ?? "Brak danych"
                             Text(airIndex)
                                 .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex))
-                                .font(.title2)
+                                .font(.title)
                                 .fontWeight(.heavy)
                                 .fontDesign(.rounded)
+                                .multilineTextAlignment(.center)
                         }
-                        .frame(width: proxy.size.width/2)
+                        .frame(maxWidth: proxy.size.width/2, maxHeight: proxy.size.height, alignment: .top)
                         VStack{
                             if let data = entry.sensorData{
                                 if let value = data.values.first{
-                                    Text("\(value.value ?? 0.0)")
+                                    Text("\(sensorData?.param.paramName.capitalized ?? "")")
+                                        .font(.caption)
+                                        .fontWeight(.semibold)
+                                        .multilineTextAlignment(.center)
+                                        .fontDesign(.rounded)
+                                    if let sensorValue = value.value{
+                                        Text("\(sensorValue, specifier: "%.2f") μg/m3")
+                                            .font(.caption2)
+                                            .fontWeight(.medium)
+                                            .multilineTextAlignment(.center)
+                                            .fontDesign(.rounded)
+                                    }
+                                    else{
+                                        Text("Brak aktualnych danych")
+                                            .font(.system(size: 10))
+                                            .fontWeight(.medium)
+                                            .multilineTextAlignment(.center)
+                                            .fontDesign(.rounded)
+                                    }
                                 }
-                            }  
+                            }
+                            Chart {
+                                if let data = entry.sensorData {
+                                    ForEach(data.values.reversed()) { value in
+                                        if let chartValue = value.value{
+                                            LineMark(
+                                                x: .value("Date", value.date),
+                                                y: .value("Value", chartValue))
+                                            .interpolationMethod(.catmullRom)
+                                            .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex))
+                                            
+                                            AreaMark(
+                                                x: .value("Date", value.date),
+                                                y: .value("Value", chartValue))
+                                            .interpolationMethod(.catmullRom)
+                                            .foregroundStyle(widgetVM.getColor(forAirQuality: airIndex).opacity(0.2).gradient)
+                                        }
+                                    }
+                                }
+                            }
+                            .chartYAxis(.hidden)
+                            .chartXAxis(.hidden)
+                            .padding([.horizontal, .bottom], 10)
+
                         }
                     }
                 }

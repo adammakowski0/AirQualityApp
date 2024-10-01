@@ -12,11 +12,8 @@ struct SensorDataChart: View {
     
     @StateObject var vm: SensorDataViewModel
     
-    var sensor: Sensor
-    
     init(sensor: Sensor) {
         _vm = StateObject(wrappedValue: SensorDataViewModel(sensorID: sensor.id))
-        self.sensor = sensor
     }
     
     let axisDateFormatter: DateFormatter = {
