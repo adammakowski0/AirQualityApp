@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import CoreData
 
 class StationDetailViewModel: ObservableObject {
     
@@ -19,14 +20,32 @@ class StationDetailViewModel: ObservableObject {
     
     @Published var isFavourite: Bool = false
     
+    @Published var savedEntities: [FavouritesEntity] = []
+    
     var cancelables = Set<AnyCancellable>()
     
     var station: Station
+    
+    var favouritesDataManager = FavouritesCoreDataManager()
     
     init(station: Station) {
         self.station = station
         downloadSensors(stationID: station.id)
         downloadAirQualityIndex(stationID: station.id)
+        getFavouriteStationData()
+    }
+    
+    func getFavouriteStationData(){
+        
+        savedEntities = favouritesDataManager.fetchData()
+            for entity in savedEntities{
+                if entity.stationName == station.stationName{
+                    station.isFavourite = true
+                    isFavourite = true
+                }
+            }
+        favouritesDataManager.saveData()
+        
     }
     
     func downloadSensors(stationID: Int) {
@@ -53,16 +72,38 @@ class StationDetailViewModel: ObservableObject {
     }
     
     func addToFavourites() {
-        isFavourite.toggle()
+        
         if var favourite = station.isFavourite {
             favourite.toggle()
             station.isFavourite = favourite
+            isFavourite = favourite
         }
         else {
             station.isFavourite = true
+            isFavourite = true
         }
-        print(station)
-        
+        if isFavourite{
+            let favourite = favouritesDataManager.getEntity()
+            favourite.stationID = Int32(station.id)
+            favourite.stationName = station.stationName
+            if !savedEntities.contains(where: { $0 == favourite }) {
+                savedEntities.append(favourite)
+            }
+            favouritesDataManager.saveData()
+        }
+        else {
+            deleteFromFavourites()
+        }
+    }
+    
+    func deleteFromFavourites() {
+        for entity in savedEntities {
+            if entity.stationName == station.stationName {
+                
+                favouritesDataManager.deleteEntity(entity: entity)
+            }
+        }
+        favouritesDataManager.saveData()
     }
     
     func getColor(forAirQuality quality: String) -> Color {

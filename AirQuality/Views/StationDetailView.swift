@@ -51,6 +51,7 @@ extension StationDetailView {
             } label: {
                 Image(systemName: "star.fill")
                     .tint(vm.isFavourite ? .yellow : .primary)
+                    .font(.title3)
                     .padding(10)
                     .background()
                     .clipShape(Circle())

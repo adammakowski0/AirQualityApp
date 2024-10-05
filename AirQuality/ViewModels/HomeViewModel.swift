@@ -17,13 +17,28 @@ class HomeViewModel: ObservableObject {
     @Published var showStationDetails: Station? = nil
     
     @Published var currentStation: Station?
-    
     @Published var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 52.0, longitude: 19.0), span: MKCoordinateSpan(latitudeDelta: 10.0, longitudeDelta: 10.0))
+    
+    @Published var savedEntities: [FavouritesEntity] = []
+    
+    @Published var showFavourites: Bool = false
     
     var cancelables = Set<AnyCancellable>()
     
+    var favouritesDataManager = FavouritesCoreDataManager()
+    
+    
     init() {
         downloadStations()
+        getFavouriteStationData()
+    }
+    
+    func getFavouriteStationData(){
+        
+        savedEntities = favouritesDataManager.fetchData()
+        
+        favouritesDataManager.saveData()
+        
     }
     
     func downloadStations() {

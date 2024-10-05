@@ -32,11 +32,6 @@ struct StationInfoView: View {
 extension StationInfoView {
     private var stationNameView: some View {
         HStack {
-            if station.isFavourite ?? false {
-                Image(systemName: "star.fill")
-                    .foregroundStyle(.yellow)
-            }
-            
             Text(station.stationName)
                 .font(.headline)
                 .fontWeight(.bold)

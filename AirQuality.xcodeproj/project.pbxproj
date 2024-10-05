@@ -60,7 +60,6 @@
 				Models/SensorModel.swift,
 				Models/StationModel.swift,
 				NetworkManager.swift,
-				ViewModels/HomeViewModel.swift,
 			);
 			target = 2CC28F0E2CA3F665007C4090 /* AirQualityWidgetExtension */;
 		};

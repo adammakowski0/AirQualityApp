@@ -17,18 +17,35 @@ struct HomeView: View {
     
     @State var showNewUserView: Bool = false
     
+    
     var body: some View {
         ZStack {
             mapView
                 .overlay(alignment: .bottom) {
                     if let station = vm.currentStation {
                         StationInfoView(station: station)
-                        
                     }
                     else {
                         selectStationView
                     }
                 }
+                .overlay(alignment: .topTrailing, content: {
+                    Button {
+                        withAnimation {
+                            vm.showFavourites.toggle()
+                            vm.getFavouriteStationData()
+                        }
+                    } label: {
+                        Image(systemName: "star.fill")
+                            .font(.title2)
+                            .tint(.primary)
+                            .padding(12)
+                            .background(.regularMaterial)
+                            .clipShape(Circle())
+                            .shadow(radius: 10)
+                    }
+                    .offset(x: -10, y: 60)
+                })
                 .ignoresSafeArea()
                 .sheet(item: $vm.showStationDetails) { station in
                     StationDetailView(station: station)
@@ -39,6 +56,12 @@ struct HomeView: View {
             
             if showNewUserView {
                 newUserView
+            }
+            
+            if vm.showFavourites {
+                FavouritesView()
+                    .transition(.move(edge: .trailing))
+                    .zIndex(1)
             }
         }
         .onAppear{
