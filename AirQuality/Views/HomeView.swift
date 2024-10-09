@@ -70,6 +70,7 @@ struct HomeView: View {
                     showNewUserView = true
                 }
             }
+            NotificationManager.instance.cancelNotifications()
             NotificationManager.instance.requestAuthorization()
             NotificationManager.instance.scheduleNotification()
         }

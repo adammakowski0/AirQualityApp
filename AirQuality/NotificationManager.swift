@@ -31,8 +31,8 @@ class NotificationManager {
         content.sound = .default
         
         var dateComponents = DateComponents()
-        dateComponents.hour = 8
-        dateComponents.minute = 0
+        dateComponents.hour = 15
+        dateComponents.minute = 8
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
@@ -42,6 +42,11 @@ class NotificationManager {
             trigger: trigger)
         
         UNUserNotificationCenter.current().add(request)
+    }
+    
+    func cancelNotifications() {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
     }
 
 }
