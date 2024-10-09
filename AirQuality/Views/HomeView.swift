@@ -164,6 +164,7 @@ extension HomeView {
             removal: .move(edge: .top)))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .background(.ultraThinMaterial.opacity(0.7))
+        .zIndex(2)
     }
     
     private var apiInfoView: some View {
