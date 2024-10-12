@@ -388,7 +388,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AirQuality/AirQuality.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"AirQuality/Preview Content\"";
 				DEVELOPMENT_TEAM = 3798CWZT59;
 				ENABLE_PREVIEWS = YES;
@@ -421,7 +421,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AirQuality/AirQuality.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"AirQuality/Preview Content\"";
 				DEVELOPMENT_TEAM = 3798CWZT59;
 				ENABLE_PREVIEWS = YES;
@@ -453,12 +453,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3798CWZT59;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AirQualityWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = AirQualityWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = "Jakość powietrza";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,12 +481,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3798CWZT59;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AirQualityWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = AirQualityWidget;
+				INFOPLIST_KEY_CFBundleDisplayName = "Jakość powietrza";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
