@@ -132,18 +132,16 @@ extension HomeView {
                         Text("Pobieranie stacji pomiarowych...")
                             .font(.headline)
                             .fontWeight(.bold)
-                            .padding(.horizontal, 10)
+                            .lineLimit(1)
                         Text("Sprawdź połączenie z internetem")
                             .font(.caption)
                             .fontWeight(.semibold)
                             .foregroundStyle(.secondary)
                     }
+                    .padding(.trailing, 6)
                     if vm.loading {
                         ProgressView()
-                            .font(.headline)
-                            .fontDesign(.rounded)
-                            .foregroundColor(.primary)
-                            .padding(7)
+                            .padding(6)
                             .background(
                                 Circle()
                                     .fill(.regularMaterial)
