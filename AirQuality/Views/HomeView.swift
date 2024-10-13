@@ -115,13 +115,59 @@ extension HomeView {
     
     private var selectStationView: some View {
         VStack {
-            Text("Wybierz stację pomiarową")
-                .font(.headline)
-                .fontWeight(.bold)
-            Text("Kliknij w jedną z lokalizacji na mapie")
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(.secondary)
+            if vm.dataLoaded {
+                Text("Wybierz stację pomiarową")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                
+                Text("Kliknij w jedną z lokalizacji na mapie")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+                
+            }
+            else {
+                HStack {
+                    VStack {
+                        Text("Pobieranie stacji pomiarowych...")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 10)
+                        Text("Sprawdź połączenie z internetem")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.secondary)
+                    }
+                    if vm.loading {
+                        ProgressView()
+                            .font(.headline)
+                            .fontDesign(.rounded)
+                            .foregroundColor(.primary)
+                            .padding(7)
+                            .background(
+                                Circle()
+                                    .fill(.regularMaterial)
+                                    .shadow(radius: 5)
+                            )
+                    }
+                    else {
+                        Button {
+                            vm.downloadStations()
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                                .font(.headline)
+                                .fontDesign(.rounded)
+                                .foregroundColor(.primary)
+                                .padding(7)
+                                .background(
+                                    Circle()
+                                        .fill(.regularMaterial)
+                                        .shadow(radius: 5)
+                                )
+                        }
+                    }
+                }
+            }
         }
         .frame(maxWidth: .infinity)
         .padding()

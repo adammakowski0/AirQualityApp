@@ -23,9 +23,15 @@ class HomeViewModel: ObservableObject {
     
     @Published var showFavourites: Bool = false
     
+    @Published var dataLoaded: Bool = false
+    
+    @Published var loading: Bool = false
+    
     var cancelables = Set<AnyCancellable>()
     
     var favouritesDataManager = FavouritesCoreDataManager()
+    
+    var timer: Timer?
     
     
     init() {
@@ -42,12 +48,21 @@ class HomeViewModel: ObservableObject {
     }
     
     func downloadStations() {
-        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/rest/station/findAll") else { return }
+        dataLoaded = false
+        loading = true
         
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { timer in
+            self.loading = false
+            return
+        })
+        
+        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/rest/station/findAll") else { return }
         NetworkManager.download(url: url)
             .decode(type: [Station].self, decoder: JSONDecoder())
             .sink(receiveCompletion: NetworkManager.handleCompletion, receiveValue: { [weak self] returnedStations in
                 self?.allStations = returnedStations
+                self?.dataLoaded = true
+                self?.timer?.invalidate()
             })
             .store(in: &cancelables)
     }
