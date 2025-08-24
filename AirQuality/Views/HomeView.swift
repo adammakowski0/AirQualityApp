@@ -17,7 +17,6 @@ struct HomeView: View {
     
     @State var showNewUserView: Bool = false
     
-    
     var body: some View {
         ZStack {
             mapView
@@ -43,6 +42,7 @@ struct HomeView: View {
                             .background(.regularMaterial)
                             .clipShape(Circle())
                             .shadow(radius: 10)
+                            
                     }
                     .offset(x: -10, y: 60)
                 })
@@ -88,11 +88,21 @@ extension HomeView {
         Map(coordinateRegion: $vm.region, annotationItems: vm.allStations)
         { station in
             MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: Double(station.gegrLat)!, longitude: Double(station.gegrLon)!)) {
-                Image(systemName: "location.fill")
-                    .padding(6)
-                    .background()
-                    .clipShape(Circle())
-                    .shadow(radius: 10)
+//                Image(systemName: "location.fill")
+//                    .padding(6)
+//                    .background()
+//                    .clipShape(Circle())
+//                    .shadow(radius: 10)
+//                    .scaleEffect(x: annotationScale ? 0.6 : 1.0,
+//                                 y: annotationScale ? 0.6 : 1.0)
+//                    .scaleEffect(x: vm.currentStation == station ? 1.0 : 0.8,
+//                                 y: vm.currentStation == station ? 1.0 : 0.8)
+//                    .onTapGesture {
+//                        withAnimation(.easeInOut) {
+//                            vm.updateRegion(currentStation: station)
+//                        }
+//                    }
+                MapMarkerView(station: station)
                     .scaleEffect(x: annotationScale ? 0.6 : 1.0,
                                  y: annotationScale ? 0.6 : 1.0)
                     .scaleEffect(x: vm.currentStation == station ? 1.0 : 0.8,
@@ -138,7 +148,7 @@ extension HomeView {
                             .fontWeight(.semibold)
                             .foregroundStyle(.secondary)
                     }
-                    .padding(.trailing, 6)
+                    .padding(.trailing, 5)
                     if vm.loading {
                         ProgressView()
                             .padding(6)
@@ -197,10 +207,10 @@ extension HomeView {
                     .font(.headline)
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(.thinMaterial)
+                    .background()
                     .cornerRadius(15)
                     .padding(.horizontal)
-                    .shadow(radius: 10)
+                    .shadow(radius: 3)
             }
             
         }
@@ -208,7 +218,7 @@ extension HomeView {
             insertion: .move(edge: .bottom),
             removal: .move(edge: .top)))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .background(.ultraThinMaterial.opacity(0.7))
+        .background(.ultraThinMaterial.opacity(0.9))
         .zIndex(2)
     }
     
@@ -237,9 +247,9 @@ extension HomeView {
         }
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.regularMaterial)
+                .fill(.background)
                 .padding(.horizontal, 10)
-                .shadow(radius: 10)
+                .shadow(radius: 3)
         )
     }
 }

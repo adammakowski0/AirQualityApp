@@ -54,7 +54,7 @@ extension StationInfoView {
     }
 }
 
-#Preview {
-    StationInfoView(station: Station(id: 114, stationName: "Wrocław, ul. Bartnicza", gegrLat: "51.115933", gegrLon: "17.141125", city: City(id: 100, name: "Wrocław", commune: Commune(communeName: "TEST", districtName: "aaaaa", provinceName: "Mazowieckie")), isFavourite: true))
-        .environmentObject(HomeViewModel())
-}
+//#Preview {
+//    StationInfoView(station: Station(id: 114, stationName: "Wrocław, ul. Bartnicza", gegrLat: "51.115933", gegrLon: "17.141125", city: City(id: 100, name: "Wrocław", commune: Commune(communeName: "TEST", districtName: "aaaaa", provinceName: "Mazowieckie")), isFavourite: true))
+//        .environmentObject(HomeViewModel())
+//}

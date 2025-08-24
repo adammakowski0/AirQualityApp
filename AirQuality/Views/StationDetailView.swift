@@ -39,8 +39,8 @@ extension StationDetailView {
                 Text(station.stationName)
                     .font(.title)
                     .fontWeight(.bold)
-                Text(station.city.name)
-                Text(station.city.commune.provinceName)
+                Text(station.cityName)
+                Text(station.voivodeship)
                     .font(.callout)
                     .foregroundStyle(.secondary)
                 Divider()
@@ -93,10 +93,10 @@ extension StationDetailView {
                 .padding(.leading)
                 .padding(.bottom, 5)
             
-            Text("\(vm.airQualityIndex?.stIndexLevel.indexLevelName ?? "Brak danych")")
+            Text("\(vm.airQualityIndex?.indexLevelName ?? "Brak danych")")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(vm.getColor(forAirQuality: "\(vm.airQualityIndex?.stIndexLevel.indexLevelName ?? "Brak danych")"))
+                .foregroundColor(vm.getColor(forAirQuality: "\(vm.airQualityIndex?.indexLevelName ?? "Brak danych")"))
             
             Divider()
         }
@@ -118,8 +118,8 @@ extension StationDetailView {
     }
 }
 
-#Preview {
-    let station = Station(id: 114, stationName: "Wrocław, ul. Bartnicza", gegrLat: "51.115933", gegrLon: "17.141125", city: City(id: 100, name: "Wrocław", commune: Commune(communeName: "TEST", districtName: "Testttsts", provinceName: "MAZOWIECKIE")))
-    StationDetailView(station: station)
-        .environmentObject(StationDetailViewModel(station: station))
-}
+//#Preview {
+//    let station = Station(id: 114, stationName: "Wrocław, ul. Bartnicza", gegrLat: "51.115933", gegrLon: "17.141125", city: City(id: 100, name: "Wrocław", commune: Commune(communeName: "TEST", districtName: "Testttsts", provinceName: "MAZOWIECKIE")))
+//    StationDetailView(station: station)
+//        .environmentObject(StationDetailViewModel(station: station))
+//}

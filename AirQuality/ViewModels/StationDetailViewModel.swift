@@ -50,23 +50,23 @@ class StationDetailViewModel: ObservableObject {
     
     func downloadSensors(stationID: Int) {
         
-        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/rest/station/sensors/\(stationID)") else { return }
-        
+        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/v1/rest/station/sensors/\(stationID)?size=500") else { return }
+
         NetworkManager.download(url: url)
-            .decode(type: [Sensor].self, decoder: JSONDecoder())
+            .decode(type: SensorsResponse.self, decoder: JSONDecoder())
             .sink(receiveCompletion: NetworkManager.handleCompletion, receiveValue: { [weak self] returnedSensors in
-                self?.sensors = returnedSensors
+                self?.sensors = returnedSensors.sensors
             })
             .store(in: &cancelables)
     }
     
     func downloadAirQualityIndex(stationID: Int) {
-        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/\(stationID)") else { return }
+        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/v1/rest/aqindex/getIndex/\(stationID)?size=500") else { return }
         
         NetworkManager.download(url: url)
-            .decode(type: AirQualityIndex.self, decoder: JSONDecoder())
+            .decode(type: AirQualityIndexResponse.self, decoder: JSONDecoder())
             .sink(receiveCompletion: NetworkManager.handleCompletion, receiveValue: { [weak self] airQuality in
-                self?.airQualityIndex = airQuality
+                self?.airQualityIndex = airQuality.AirQualityIndex
             })
             .store(in: &cancelables)
     }

@@ -26,5 +26,5 @@ struct AirQualityWidget: Widget {
 #Preview(as: .systemSmall) {
     AirQualityWidget()
 } timeline: {
-    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil, sensorData: nil)
+    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQualityResponse: nil, sensorDataResponse: nil)
 }

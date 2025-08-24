@@ -11,6 +11,6 @@ import WidgetKit
 struct AirQualityEntry: TimelineEntry {
     let date: Date
     let configuration: SelectStationIntent
-    let airQuality: AirQualityIndex?
-    let sensorData: SensorData?
+    let airQualityResponse: AirQualityIndexResponse?
+    let sensorDataResponse: SensorDataResponse?
 }

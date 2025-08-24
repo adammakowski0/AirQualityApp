@@ -30,7 +30,7 @@ struct SensorDataChart: View {
     var body: some View {
         Chart {
             if let data = vm.sensorData {
-                ForEach(data.values.reversed()) { value in
+                ForEach(data.reversed()) { value in
                     if let chartValue = value.value{
                         LineMark(
                             x: .value("Date", value.date),
@@ -79,5 +79,5 @@ struct SensorDataChart: View {
 }
 
 #Preview {
-    SensorDataChart(sensor: Sensor(id: 644, stationId: 114, param: Param(paramName: "dwutlenek azotu", paramFormula: "NO2", paramCode: "NO2", idParam: 6)))
+    SensorDataChart(sensor: Sensor(id: 644, stationId: 114, paramName: "dwutlenek azotu", paramFormula: "NO2", paramCode: "NO2", idParam: 6))
 }

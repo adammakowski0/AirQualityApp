@@ -20,7 +20,7 @@ struct AirQualityWidgetView : View {
     
     var body: some View {
         
-        let airIndex = entry.airQuality?.stIndexLevel.indexLevelName ?? "Brak danych"
+        let airIndex = entry.airQualityResponse?.AirQualityIndex.indexLevelName ?? "Brak danych"
         let sensorData = entry.configuration.sensor
         
         switch widgetFamily {
@@ -105,27 +105,25 @@ extension AirQualityWidgetView {
     
     private func sensorInfoView(airIndex: String, sensorData: SensorDetail?) -> some View {
         VStack{
-            if let data = entry.sensorData{
-                if let value = data.values.first{
-                    Text("\(sensorData?.param.paramName.capitalized ?? "")")
-                        .font(.caption)
-                        .fontWeight(.semibold)
+            if let data = entry.sensorDataResponse?.sensorData.first{
+                Text("\(sensorData?.paramName.capitalized ?? "")")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                    .fontDesign(.rounded)
+                if let value = data.value{
+                    Text("\(value, specifier: "%.2f") μg/m3")
+                        .font(.caption2)
+                        .fontWeight(.medium)
                         .multilineTextAlignment(.center)
                         .fontDesign(.rounded)
-                    if let sensorValue = value.value{
-                        Text("\(sensorValue, specifier: "%.2f") μg/m3")
-                            .font(.caption2)
-                            .fontWeight(.medium)
-                            .multilineTextAlignment(.center)
-                            .fontDesign(.rounded)
-                    }
-                    else{
-                        Text("Brak aktualnych danych")
-                            .font(.system(size: 10))
-                            .fontWeight(.medium)
-                            .multilineTextAlignment(.center)
-                            .fontDesign(.rounded)
-                    }
+                }
+                else{
+                    Text("Brak aktualnych danych")
+                        .font(.system(size: 10))
+                        .fontWeight(.medium)
+                        .multilineTextAlignment(.center)
+                        .fontDesign(.rounded)
                 }
             }
             widgetChartView(airIndex: airIndex)
@@ -135,8 +133,8 @@ extension AirQualityWidgetView {
     
     private func widgetChartView(airIndex: String) -> some View {
         Chart {
-            if let data = entry.sensorData {
-                ForEach(data.values.reversed()) { value in
+            if let data = entry.sensorDataResponse {
+                ForEach(data.sensorData.reversed()) { value in
                     if let chartValue = value.value{
                         LineMark(
                             x: .value("Date", value.date),
@@ -163,5 +161,5 @@ extension AirQualityWidgetView {
 #Preview(as: .systemMedium) {
     AirQualityWidget()
 } timeline: {
-    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQuality: nil, sensorData: nil)
+    AirQualityEntry(date: .now, configuration: SelectStationIntent(), airQualityResponse: nil, sensorDataResponse: nil)
 }

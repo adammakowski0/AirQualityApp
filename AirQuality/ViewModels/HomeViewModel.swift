@@ -32,7 +32,7 @@ class HomeViewModel: ObservableObject {
     var favouritesDataManager = FavouritesCoreDataManager()
     
     var timer: Timer?
-    
+    var totalPages: Int?
     
     init() {
         downloadStations()
@@ -56,14 +56,48 @@ class HomeViewModel: ObservableObject {
             return
         })
         
-        guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/rest/station/findAll") else { return }
-        NetworkManager.download(url: url)
-            .decode(type: [Station].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: NetworkManager.handleCompletion, receiveValue: { [weak self] returnedStations in
-                self?.allStations = returnedStations
-                self?.dataLoaded = true
-                self?.timer?.invalidate()
-            })
+        guard let firstURL = URL(string: "https://api.gios.gov.pl/pjp-api/v1/rest/station/findAll?page=0&size=20") else { return }
+
+        NetworkManager.download(url: firstURL)
+            .decode(type: StationsResponse.self, decoder: JSONDecoder())
+            .flatMap { [weak self] firstResponse -> AnyPublisher<[Station], Error> in
+                guard let self = self else {
+                    return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
+                }
+
+                self.totalPages = firstResponse.totalPages ?? 1
+                var allStations = firstResponse.stations
+
+                // Jeśli tylko 1 strona → zwróć od razu
+                guard self.totalPages ?? 1 > 1 else {
+                    return Just(allStations).setFailureType(to: Error.self).eraseToAnyPublisher()
+                }
+
+                // Tworzymy publisher dla pozostałych stron
+                let publishers = (1..<(self.totalPages ?? 1)).compactMap { page -> AnyPublisher<[Station], Error>? in
+                    guard let url = URL(string: "https://api.gios.gov.pl/pjp-api/v1/rest/station/findAll?page=\(page)&size=20") else {
+                        return nil
+                    }
+                    return NetworkManager.download(url: url)
+                        .decode(type: StationsResponse.self, decoder: JSONDecoder())
+                        .map { $0.stations }
+                        .eraseToAnyPublisher()
+                }
+
+                return Publishers.MergeMany(publishers)
+                    .collect()
+                    .map { moreStations -> [Station] in
+                        allStations.append(contentsOf: moreStations.flatMap { $0 })
+                        return allStations
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .sink(receiveCompletion: NetworkManager.handleCompletion,
+                  receiveValue: { [weak self] stations in
+                      self?.allStations = stations
+                      self?.dataLoaded = true
+                      self?.timer?.invalidate()
+                  })
             .store(in: &cancelables)
     }
 

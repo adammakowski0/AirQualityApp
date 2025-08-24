@@ -27,8 +27,8 @@ struct SensorDataRowView: View {
         Divider()
         HStack {
             VStack (alignment: .leading){
-                Text("\(sensor.param.paramName)".capitalized)
-                Text("\(sensor.param.paramCode)")
+                Text("\(sensor.paramName)".capitalized)
+                Text("\(sensor.paramCode)")
                     .font(.caption)
                     .bold()
             }
@@ -36,8 +36,8 @@ struct SensorDataRowView: View {
             .background(.black.opacity(0.0000001))
             
             if let data = vm.sensorData,
-               let values = data.values.first,
-               let value = values.value {
+               
+               let value = data.first?.value {
                 Text("\(value, specifier: "%.2f") μg/m3")
             }
             else{
@@ -59,5 +59,5 @@ struct SensorDataRowView: View {
 }
 
 #Preview {
-    SensorDataRowView(sensor: Sensor(id: 644, stationId: 114, param: Param(paramName: "dwutlenek azotu", paramFormula: "NO2", paramCode: "NO2", idParam: 6)))
+    SensorDataRowView(sensor: Sensor(id: 644, stationId: 114, paramName: "dwutlenek azotu", paramFormula: "NO2", paramCode: "NO2", idParam: 6))
 }
