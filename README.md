@@ -1,6 +1,7 @@
 # Aplikacja do sprawdzania jakości powietrza
 
 Aplikacja służy do monitorowania aktualnych danych odnośnie powietrza z wybranych lokalizacji w Polsce. Dane są pobierane z API Głównego Inspektoratu Ochrony Środowiska [GIOŚ](https://powietrze.gios.gov.pl/pjp/content/api). Aplikacja wspiera iOS 16.6 lub nowszy. Widgety są dostępne od wersji iOS 17.0.
+Wersję testową aplikacji można pobrać za pośrednicwem TestFlight korzystajać z linku [https://testflight.apple.com/join/VQFQY2JB](https://testflight.apple.com/join/VQFQY2JB)
 
 ## Użyte technologie
 - Swift
